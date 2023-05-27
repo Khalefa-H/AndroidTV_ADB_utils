@@ -1,12 +1,17 @@
 from pynput import *
 from pynput.keyboard import Key 
 from ppadb.client import Client 
+# Device name
+chromecast_name=""
+#adb Server 
 client = Client(host="127.0.0.1", port=5037)
-device = client.device("10.0.0.181:5555")
+device = client.device(chromecast_name)
+#Infomation
 print('AndroidTV ADB MEDIA controls Press ESC to exit')
 print('     ↑ Vol+ ')
 print('N/A←   →play/pause')
 print('     ↓vol-')
+#Listener
 def on_key_release(key):
     if key == Key.right:
         device.shell("input keyevent 85")
@@ -22,6 +27,6 @@ def on_key_release(key):
     elif key == Key.esc:
         exit()
 
-
+#start Listening
 with keyboard.Listener(on_release=on_key_release) as listener:
     listener.join()
